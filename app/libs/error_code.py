@@ -6,6 +6,18 @@
 from app.libs.error import APIException
 
 
+class Success(APIException):
+    code = 201
+    msg = 'ok'
+    error_code = 0
+
+
+class ServerError(APIException):
+    code = 500
+    msg = 'sorry,server exception'
+    error_code = 999
+
+
 class ClientTypeError(APIException):
     # 400请求参数错误
     code = 400

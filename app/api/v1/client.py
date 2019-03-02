@@ -5,7 +5,7 @@
 from flask import request
 
 from app.libs.enums import ClientTypeEnum
-from app.libs.error_code import ClientTypeError
+from app.libs.error_code import ClientTypeError, Success
 from app.libs.redprint import Redprint
 from app.models.user import User
 from app.validators.forms import ClientForm, UserEmailForm
@@ -22,8 +22,7 @@ def create_client():
         # ClientTypeEnum.USER_MINA:
     }
     promise[form.type.data]()
-    return 'success'
-
+    return Success()
 
 # 邮件注册
 def __register_user_by_email():
