@@ -3,8 +3,9 @@
 
 """
 from sqlalchemy import Column, Integer, String, SmallInteger
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
+from app.libs.error_code import AuthFailed
 from app.models.base import Base, db
 
 
@@ -14,6 +15,13 @@ class User(Base):
     nickname = Column(String(24), unique=True)
     auth = Column(SmallInteger, default=1)
     _password = Column('password', String(100))
+
+    # 序列化对像 keys，__getitem__
+    def keys(self):
+        return ['id', 'email', 'nickname', 'auth']
+
+    def __getitem__(self, item):
+        return getattr(self, item)
 
     @property
     def password(self):
@@ -32,3 +40,15 @@ class User(Base):
             user.email = account
             user.password = secret
             db.session.add(user)
+
+    @staticmethod
+    def verify(email, password):
+        user = User.query.filter_by(email=email).first_or_404()
+        if not user.check_password(raw=password):
+            raise AuthFailed(msg='password error')
+        return {'uid': user.id}
+
+    def check_password(self, raw):
+        if not self._password:
+            return False
+        return check_password_hash(self._password, raw)

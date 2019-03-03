@@ -12,6 +12,7 @@ requests = "*"
 wtforms = "*"
 sqlalchemy = "*"
 flask-sqlalchemy = "*"
+flask-httpauth = "*"
 
 [requires]
 python_version = "3.7"
