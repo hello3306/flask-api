@@ -12,6 +12,11 @@ class Success(APIException):
     error_code = 0
 
 
+class DeleteSuccess(Success):
+    code = 202
+    error_code = 1
+
+
 class ServerError(APIException):
     code = 500
     msg = 'sorry,server exception'
@@ -33,7 +38,7 @@ class ParameterException(APIException):
 
 class NotFound(APIException):
     code = 404
-    msg = 'the resource are not_food'
+    msg = 'the resource are not_fund'
     error_code = 1001
 
 
@@ -41,3 +46,9 @@ class AuthFailed(APIException):
     code = 401
     msg = 'authorization failed'
     error_code = 1005
+
+
+class Forbidden(APIException):
+    code = 403
+    error_code = 1004
+    msg = "Forbidden,not in scope"

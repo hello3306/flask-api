@@ -20,7 +20,6 @@ class User(Base):
     def keys(self):
         return ['id', 'email', 'nickname', 'auth']
 
-
     @property
     def password(self):
         return self._password
@@ -44,7 +43,8 @@ class User(Base):
         user = User.query.filter_by(email=email).first_or_404()
         if not user.check_password(raw=password):
             raise AuthFailed(msg='password error')
-        return {'uid': user.id}
+        scope = 'AdminScope' if user.auth == 2 else 'UserScope'
+        return {'uid': user.id, 'scope': scope}
 
     def check_password(self, raw):
         if not self._password:
