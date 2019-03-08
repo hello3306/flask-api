@@ -24,6 +24,7 @@ def create_client():
     promise[form.type.data]()
     return Success()
 
+
 # 邮件注册
 def __register_user_by_email():
     form = UserEmailForm().validate_form_api()

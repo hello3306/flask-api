@@ -36,3 +36,11 @@ class UserEmailForm(ClientForm):
     def validate_account(self, value):
         if User.query.filter_by(email=value.data).first():
             raise ValidationError()
+
+
+class BookSearchForm(BaseForm):
+    q = StringField(validators=[DataRequired()])
+
+
+class TokenForm(BaseForm):
+    token = StringField(validators=[DataRequired()])
